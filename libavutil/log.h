@@ -183,6 +183,7 @@ void av_vlog(void *avcl, int level, const char *fmt, va_list);
 int av_log_get_level(void);
 void av_log_set_level(int);
 void av_log_set_callback(void (*)(void*, int, const char*, va_list));
+void av_log_set_formatted_callback(void (*)(void*, int, const char*));
 void av_log_default_callback(void* ptr, int level, const char* fmt, va_list vl);
 const char* av_default_item_name(void* ctx);
 AVClassCategory av_default_get_category(void *ptr);
