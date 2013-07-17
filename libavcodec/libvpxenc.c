@@ -667,6 +667,9 @@ static int vp8_encode(AVCodecContext *avctx, AVPacket *pkt,
             v_plane = av_malloc(frame->linesize[2] * frame->height);
             memset(v_plane, 0x80, frame->linesize[2] * frame->height);
             rawimg_alpha->planes[VPX_PLANE_V] = v_plane;
+            rawimg_alpha->stride[VPX_PLANE_Y] = frame->linesize[0];
+            rawimg_alpha->stride[VPX_PLANE_U] = frame->linesize[1];
+            rawimg_alpha->stride[VPX_PLANE_V] = frame->linesize[2];
         }
         timestamp                   = frame->pts;
         if (frame->pict_type == AV_PICTURE_TYPE_I)
@@ -768,7 +771,7 @@ static av_cold int vp8_init(AVCodecContext *avctx)
 }
 
 static const AVClass class_vp8 = {
-    .class_name = "libvpx encoder",
+    .class_name = "libvpx-vp8 encoder",
     .item_name  = av_default_item_name,
     .option     = options,
     .version    = LIBAVUTIL_VERSION_INT,
@@ -797,7 +800,7 @@ static av_cold int vp9_init(AVCodecContext *avctx)
 }
 
 static const AVClass class_vp9 = {
-    .class_name = "libvpx encoder",
+    .class_name = "libvpx-vp9 encoder",
     .item_name  = av_default_item_name,
     .option     = options,
     .version    = LIBAVUTIL_VERSION_INT,

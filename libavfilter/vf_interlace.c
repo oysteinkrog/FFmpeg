@@ -132,7 +132,7 @@ static void copy_picture_field(AVFrame *src_frame, AVFrame *dst_frame,
 
         av_assert0(linesize >= 0);
 
-        lines /= 2;
+        lines = (lines + (field_type == FIELD_UPPER)) / 2;
         if (field_type == FIELD_LOWER)
             srcp += src_frame->linesize[plane];
         if (field_type == FIELD_LOWER)
@@ -149,7 +149,7 @@ static void copy_picture_field(AVFrame *src_frame, AVFrame *dst_frame,
                     srcp_below = srcp; // there is no line below
                 for (i = 0; i < linesize; i++) {
                     // this calculation is an integer representation of
-                    // '0.5 * current + 0.25 * above + 0.25 + below'
+                    // '0.5 * current + 0.25 * above + 0.25 * below'
                     // '1 +' is for rounding.
                     dstp[i] = (1 + srcp[i] + srcp[i] + srcp_above[i] + srcp_below[i]) >> 2;
                 }

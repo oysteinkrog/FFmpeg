@@ -39,9 +39,11 @@ Specifically, the GPL parts of FFmpeg are
     - vf_mp.c
     - vf_noise.c
     - vf_owdenoise.c
+    - vf_perspective.c
     - vf_pp.c
     - vf_sab.c
     - vf_smartblur.c
+    - vf_spp.c
     - vf_stereo3d.c
     - vf_super2xsai.c
     - vf_tinterlace.c
@@ -73,6 +75,7 @@ compatible libraries
 --------------------
 
 The following libraries are under GPL:
+    - frei0r
     - libcdio
     - libutvideo
     - libvidstab

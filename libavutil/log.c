@@ -298,7 +298,8 @@ void av_log_set_formatted_callback(void (*callback)(void*, int, const char*))
     av_log_formatted_callback = callback;
 }
 
-static void missing_feature_sample(int sample, void *avc, const char *msg, va_list argument_list)
+static void missing_feature_sample(int sample, void *avc, const char *msg,
+                                   va_list argument_list)
 {
     av_vlog(avc, AV_LOG_WARNING, msg, argument_list);
     av_log(avc, AV_LOG_WARNING, " is not implemented. Update your FFmpeg "

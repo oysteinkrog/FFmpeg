@@ -171,7 +171,6 @@ static av_cold int tak_decode_init(AVCodecContext *avctx)
 {
     TAKDecContext *s = avctx->priv_data;
 
-    ff_tak_init_crc();
     ff_dsputil_init(&s->dsp, avctx);
 
     s->avctx = avctx;
@@ -902,6 +901,13 @@ static int tak_decode_frame(AVCodecContext *avctx, void *data,
     return pkt->size;
 }
 
+static int init_thread_copy(AVCodecContext *avctx)
+{
+    TAKDecContext *s = avctx->priv_data;
+    s->avctx = avctx;
+    return 0;
+}
+
 static int update_thread_context(AVCodecContext *dst,
                                  const AVCodecContext *src)
 {
@@ -931,6 +937,7 @@ AVCodec ff_tak_decoder = {
     .init             = tak_decode_init,
     .close            = tak_decode_close,
     .decode           = tak_decode_frame,
+    .init_thread_copy = ONLY_IF_THREADS_ENABLED(init_thread_copy),
     .update_thread_context = ONLY_IF_THREADS_ENABLED(update_thread_context),
     .capabilities     = CODEC_CAP_DR1 | CODEC_CAP_FRAME_THREADS,
     .long_name        = NULL_IF_CONFIG_SMALL("TAK (Tom's lossless Audio Kompressor)"),

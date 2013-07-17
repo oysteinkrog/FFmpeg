@@ -382,6 +382,10 @@ typedef struct SwsContext {
     int dst0Alpha;
     int srcXYZ;
     int dstXYZ;
+    int src_h_chr_pos;
+    int dst_h_chr_pos;
+    int src_v_chr_pos;
+    int dst_v_chr_pos;
     int yuv2rgb_y_offset;
     int yuv2rgb_y_coeff;
     int yuv2rgb_v2r_coeff;
@@ -742,6 +746,8 @@ static av_always_inline int isALPHA(enum AVPixelFormat pix_fmt)
 {
     const AVPixFmtDescriptor *desc = av_pix_fmt_desc_get(pix_fmt);
     av_assert0(desc);
+    if (pix_fmt == AV_PIX_FMT_PAL8)
+        return 1;
     return desc->flags & AV_PIX_FMT_FLAG_ALPHA;
 }
 
